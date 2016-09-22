@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="products.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+    <div class="container">
+        <h3>Product List</h3>
+        <div>
+            <ul class="list-inline">
+                <li ng-repeat="value in items">
+                    <p>{{value.name}}</p>
+                    <p>{{value.unitprice |currency}}</p>
+                    <a href="javascript:void(0)" ng-click="buyAction(value.name, value.unitprice, value.id)">Buy</a>
+                </li>
+            </ul>
+
+        </div>
+        <div ng-hide = ifHide>
+            <h3>Shopping Cart</h3>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Unit Price</th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="product in products">
+                        <td>{{product.name}}</td>
+                        <td>{{product.unitprice | currency}}</td>
+                        <td>
+                            <input type="text" ng-model="product.count" style="width: 50px;text-align: center">
+                            <button ng-click="updateCount(product.id, 1)">+</button>
+                            <button ng-click="updateCount(product.id, -1)">-</button>
+                        </td>
+                        <td>{{product.count * product.unitprice | currency}}</td>
+                        <td><button ng-click="deleteItem(product.id)" class="btn btn-primary btn-sm">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Total: {{total | currency}}</p>
+        </div>
+    </div>
+</body>
+</html>
